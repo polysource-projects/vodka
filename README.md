@@ -10,21 +10,33 @@ In this example, let's assume that the user wants to authenticate on `https://ad
 
 * User opens `https://adviz.epfl.tools`, a website that requires EPFL authentication.
 * User clicks on `Login with EPFL account`.
-* User gets redirected to `https://vodka.epfl.tools?redirect_url=https://adviz.epfl.tools`.
+* User gets redirected to `https://vodka.epfl.tools?redirect_url=https://adviz.epfl.tools/vodka_callback`.
 
 ### Step 2: On Vodka's website
 
-* Vodka fetches the verified domains `https://vodka.epfl.tools/verified` (response e.g. `[adviz.epfl.tools, flep.ch]`)
-* Depending on the domain, Vodka shows a notice to the user that the domain is not verified during the complete flow.
+#### Auth-step 1: Checks for a valid JWT
+
+* Vodka checks whether there is or not a valid JWT stored in the cookies. (in this case, auth-step 2 is skipped)
+
+#### Auth-step 2: Gets a new JWT
+
 * Vodka asks for the user's EPFL email address (e.g. `john.doe@epfl.ch`).
 * Vodka sends a request to `https://vodka.epfl.tools/api/auth?email=john.doe@epfl.ch`.
 * Depending on the response, Vodka shows an error message to the user (e.g. `User not found`) or redirects the user to the code confirmation page.
 * Vodka sends a request to `https://vodka.epfl.tools/api/auth/validate?code=985718&email=john.doe@epfl.ch`.
-* Depending on the response, Vodka shows an error message to the user (e.g. `Invalid code`) or redirects the user to the ADVIZ website.
+* Depending on the response, Vodka shows an error message to the user (e.g. `Invalid code`).
+
+#### Auth-step 3: Redirects to the ADVIZ website
+
+* Vodka fetches the verified domains `https://vodka.epfl.tools/api/verify?domain=adviz.epfl.tools` to get the domain's verified metadata.
+* Depending on the domain, Vodka indicates to the user that the domain whether the domain is verified or not.
+* Vodka shows two buttons, `Accept` or `Deny`.
+* If `Deny` is clicked, the user is redirected to `https://adviz.epfl.tools/vodka_callback?vodka_error=denied`.
+* If `Accept` is clicked, the user is redirected to the ADVIZ website.
 
 ### Step 3: On the ADVIZ website (authenticated)
 
-* User gets redirected to `https://adviz.epfl.tools?token=JWT_TOKEN` (cf [JWT Data](#jwt-data)).
+* User gets redirected to `https://adviz.epfl.tools/vodka_callback?vodka_token=JWT_TOKEN` (cf [JWT Data](#jwt-data)).
 * ADVIZ's frontend verifies the JWT token and shows the user's details on their page accordingly.
 * If ADVIZ needs to perform some backend operations, it can verify the JWT token with Vodka's public key (cf [JWT Data](#jwt-data)).
  
@@ -32,7 +44,12 @@ In this example, let's assume that the user wants to authenticate on `https://ad
 
 ### Verified domains
 
-* `GET /verified`: Returns a list of verified domains (e.g. `[adviz.epfl.tools, flep.ch]`).
+* `GET /api/verify`: Returns the domain's metadata if verified. Requires the following parameters:
+  * `domain`: The domain to verify.
+
+Response:
+* `404`: the domain is not verified (no body sent).
+* `200`: 
 
 ### Start authentication
 
