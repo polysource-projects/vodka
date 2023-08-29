@@ -10,7 +10,7 @@ In this example, let's assume that the user wants to authenticate on `https://ad
 
 * User opens `https://adviz.epfl.tools`, a website that requires EPFL authentication.
 * User clicks on `Login with EPFL account`.
-* User gets redirected to `https://vodka.epfl.tools?redirect_url=https://adviz.epfl.tools/vodka_callback`.
+* User gets redirected to `'https://vodka.epfl.tools?redirect_url=' + urlencode('https://adviz.epfl.tools/vodka_callback`).
 
 ### Step 2: On Vodka's website
 
@@ -36,9 +36,9 @@ In this example, let's assume that the user wants to authenticate on `https://ad
 
 ### Step 3: On the ADVIZ website (authenticated)
 
-* User gets redirected to `https://adviz.epfl.tools/vodka_callback?vodka_token=JWT_TOKEN` (cf [JWT Data](#jwt-data)).
-* ADVIZ's frontend verifies the JWT token and shows the user's details on their page accordingly.
-* If ADVIZ needs to perform some backend operations, it can verify the JWT token with Vodka's public key (cf [JWT Data](#jwt-data)).
+* User gets redirected to `https://adviz.epfl.tools/vodka_callback?vodka_token=JWT` (cf [JWT Data](#jwt-data)).
+* ADVIZ's frontend verifies the JWT and shows the user's details on their page accordingly from the JWT or another source.
+* If ADVIZ needs to perform some backend operations, it can verify the JWT with Vodka's public key (cf [JWT Data](#jwt-data)).
  
 ## Vodka API
 
@@ -122,4 +122,3 @@ Response:
     }
 }
 ```
-
