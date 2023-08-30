@@ -123,3 +123,27 @@ Cookie: SESSION_ID
     "website": Website,
 }
 ```
+
+## Types
+
+### `User`
+
+```json
+{
+    "email": string,
+    "firstName": string?,
+    "lastName": string?,
+}
+```
+
+### `Website`
+
+```json
+{
+    "domain": "xyz.abc.com",
+    "verified": boolean,
+    "verifiedSince": number,
+    "name": "Abc Xyz",
+    "description": "Abc blah blahblah.",
+}
+```
