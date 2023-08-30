@@ -14,7 +14,7 @@
         - Only 1 code can be sent per email address every 30s from the same device
         - Only 6 emails can be sent from a given IP over 1h
     = 201; The server sets a random QUESTION_ID cookie, or overrides the previous one.
-    Code is generated and sent, and `hash(code + session)` is stored, with generation date.
+    Code is generated and sent, and `hash(code + QUESTION_ID)` is stored, with generation date.
 2. User checks email inbox, and sends a code attempt.
     [B] - The server parses attempt, along with QUESTION_ID. Determines if the attempt can 
             be read:
@@ -59,8 +59,67 @@
 
 ### A - Request Verication Code
 
+#### Request
+```http
+POST /auth/ask
+Cookie: QUESTION_ID
+```
+```json
+```
+
+#### Response — 201 OK
+```http
+Set-Cookie: QUESTION_ID
+```
+```json
+{}
+```
+
 ### B - Try Code Attempt & Log in
+```http
+POST /auth/answer
+Cookie: QUESTION_ID
+```
+```json
+{
+    "attempt": "012345"
+}
+```
+
+#### Response — 200 OK
+
+```json
+{
+    "user": User
+}
+```
 
 ### C - Log out
+```http
+GET /auth/logout
+Cookie: SESSION_ID
+```
+
+
+#### Response — 200 OK
+
+```json
+```
 
 ### D - Get session & website data
+
+```http
+GET /data?domain=www.google.com
+Cookie: SESSION_ID
+```
+```json
+```
+
+#### Response — 200 OK
+
+```json
+{
+    "user": User,
+    "website": Website,
+}
+```
