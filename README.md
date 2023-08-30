@@ -1,6 +1,6 @@
 # Vodka
 
-Vodka is a way to authenticate users with their EPFL account without a Tequila authorization.
+Vodka is a web service to authenticate users with their EPFL account without a Tequila authorization.
 
 ## User flow
 
