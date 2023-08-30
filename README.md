@@ -120,7 +120,7 @@ Cookie: SESSION_ID
 ```json
 {
     "user": User,
-    "website": Website,
+    "website": Website
 }
 ```
 
@@ -132,7 +132,7 @@ Cookie: SESSION_ID
 {
     "email": string,
     "firstName": string?,
-    "lastName": string?,
+    "lastName": string?
 }
 ```
 
@@ -144,6 +144,6 @@ Cookie: SESSION_ID
     "verified": boolean,
     "verifiedSince": number,
     "name": "Abc Xyz",
-    "description": "Abc blah blahblah.",
+    "description": "Abc blah blahblah."
 }
 ```
