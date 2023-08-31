@@ -55,76 +55,9 @@
 
 ```
 
-## API Interactions
+## API Interactions 
 
-### A - Request Verication Code
-
-#### Request
-```http
-POST /auth/ask
-```
-```json
-{
-    "email": "john.doe@epfl.ch"
-}
-```
-
-#### Response — 201 OK
-```http
-Set-Cookie: QUESTION_ID
-```
-```json
-{}
-```
-
-### B - Try Code Attempt & Log in
-```http
-POST /auth/answer
-Cookie: QUESTION_ID
-```
-```json
-{
-    "answer": "012345"
-}
-```
-
-#### Response — 200 OK
-
-```json
-{
-    "user": User
-}
-```
-
-### C - Log out
-```http
-GET /auth/logout
-Cookie: SESSION_ID
-```
-
-
-#### Response — 200 OK
-
-```json
-```
-
-### D - Get session & website data
-
-```http
-GET /data?domain=www.google.com
-Cookie: SESSION_ID
-```
-```json
-```
-
-#### Response — 200 OK
-
-```json
-{
-    "user": User,
-    "website": Website
-}
-```
+See vodka-server README
 
 ## Types
 
