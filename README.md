@@ -62,9 +62,11 @@
 #### Request
 ```http
 POST /auth/ask
-Cookie: QUESTION_ID
 ```
 ```json
+{
+    "email": "john.doe@epfl.ch"
+}
 ```
 
 #### Response — 201 OK
