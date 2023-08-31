@@ -84,7 +84,7 @@ Cookie: QUESTION_ID
 ```
 ```json
 {
-    "attempt": "012345"
+    "answer": "012345"
 }
 ```
 
